@@ -11,15 +11,42 @@ public class Cube : MonoBehaviour
     void Update()
     {
 
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        //float horizontalInput = Input.GetAxis("Horizontal");
+        //float verticalInput = Input.GetAxis("Vertical");
 
         //transform.position = new Vector3(transform.position.x + horizontalInput * Time.deltaTime * movementSpeed, transform.position.y, transform.position.z + verticalInput * Time.deltaTime * movementSpeed);
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if(Input.GetKeyDown(KeyCode.UpArrow))
         {
             transform.position += Vector3.forward;
+            IncreaseMoveCount();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            transform.position += Vector3.back;
+            IncreaseMoveCount();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            transform.position += Vector3.left;
+            IncreaseMoveCount();
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            transform.position += Vector3.right;
+            IncreaseMoveCount();
         }
 
     }
+
+
+    private void IncreaseMoveCount()
+    {
+        Global.moveCount++;
+    }
+
+
 }
