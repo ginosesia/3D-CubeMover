@@ -5,7 +5,7 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
     float movementSpeed = 5f;
-
+    [SerializeField] private Rigidbody rigidbody;
 
     // Update is called once per frame
     void Update()
@@ -16,31 +16,84 @@ public class Cube : MonoBehaviour
 
         //transform.position = new Vector3(transform.position.x + horizontalInput * Time.deltaTime * movementSpeed, transform.position.y, transform.position.z + verticalInput * Time.deltaTime * movementSpeed);
 
-        if(Input.GetKeyDown(KeyCode.UpArrow))
+        //Ray ray = new Ray(gameObject.transform.position, gameObject.transform.forward);
+
+        //Debug.DrawLine(gameObject.transform.position, gameObject.transform.forward, Color.green);
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            transform.position += Vector3.forward;
-            IncreaseMoveCount();
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
+
+            if (CheckForWall(forward))
+            {
+                return;
+            } else
+            {
+                rigidbody.MovePosition(transform.position += Vector3.forward);
+                IncreaseMoveCount();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            transform.position += Vector3.back;
-            IncreaseMoveCount();
+            Vector3 back = transform.TransformDirection(Vector3.back);
+
+            if (CheckForWall(back))
+            {
+                return;
+            }
+            else
+            {
+                rigidbody.MovePosition(transform.position += Vector3.back);
+                IncreaseMoveCount();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            transform.position += Vector3.left;
-            IncreaseMoveCount();
+            Vector3 left = transform.TransformDirection(Vector3.left);
+
+            if (CheckForWall(left))
+            {
+                return;
+            }
+            else
+            {
+                rigidbody.MovePosition(transform.position += Vector3.left);
+                IncreaseMoveCount();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            transform.position += Vector3.right;
-            IncreaseMoveCount();
-        }
+            Vector3 right = transform.TransformDirection(Vector3.right);
 
+            if (CheckForWall(right))
+            {
+                return;
+            }
+            else
+            {
+                rigidbody.MovePosition(transform.position += Vector3.right);
+                IncreaseMoveCount();
+            }
+        }
     }
+
+
+    private bool CheckForWall(Vector3 direction)
+    {
+        if (Physics.Raycast(transform.position, direction, 1))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 
 
     private void IncreaseMoveCount()
