@@ -5,9 +5,18 @@ using UnityEngine;
 public class EndPointTrigger : MonoBehaviour
 {
 
+    private UIManager UIManager;
+
+    private void Start()
+    {
+        UIManager = FindObjectOfType<UIManager>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"You completed the level in {Global.moveCount} moves.");
+
+        UIManager.LevelComplete();
+
     }
 
 }
